@@ -147,7 +147,7 @@ public class EmployeeService {
     }
 
     // creating a new manager if a manager is not appointed to a department
-    private void handleEmployeeAsManager(EmployeeModel newManager, String department) {
+    public void handleEmployeeAsManager(EmployeeModel newManager, String department) {
 
         // Check if the department exists
         Optional<DepartmentModel> departmentOpt = departmentRepository.findByDepartmentName(department);
@@ -349,6 +349,7 @@ public class EmployeeService {
         String newManagerName = null;
         String newManagerDepartment = null;
 
+        //cannot assign a manager for an existing manager
         if (!oldManagerId.equals("0")) {
             Optional<ManagerModel> oldManagerOpt = managerRepository.findById(oldManagerId);
             if (oldManagerOpt.isPresent()) {
@@ -362,6 +363,7 @@ public class EmployeeService {
             return new ManagerChangeResponseDTO(
                     "Employee with id " + employeeId + " is already assigned to manager with id " + newManagerId);
         }
+        
         // check if the new manager id is valid
         Optional<ManagerEmployeeModel> newManagerOption = managerEmployeeRepository.findById(newManagerId);
         if (!newManagerOption.isPresent()) {
@@ -397,8 +399,8 @@ public class EmployeeService {
             managerEmployeeRepository.save(newManager);
         }
 
-        return new ManagerChangeResponseDTO(String.format("%s's manager has been successfully changed from %s to %s",
-                name, oldManagerName, newManagerName));
+        return new ManagerChangeResponseDTO(String.format("%s's manager has been successfully changed from " + oldManagerName + " to %s",
+                name, newManagerName));
     }
 
     public ResponseMessage deleteEmployee(String id) {

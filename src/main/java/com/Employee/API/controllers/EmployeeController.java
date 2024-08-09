@@ -66,7 +66,7 @@ public class EmployeeController {
     }
 
     // Add new employee
-    @PostMapping("/addEmployee")
+    @PostMapping("/newEmployee")
     public ResponseEntity<?> addEmployee(@RequestBody EmployeeModel employee) {
         try {
             employeeService.addEmployee(employee);
