@@ -44,12 +44,12 @@ public class EmployeeController {
     }
 
     //Get all departments
-    @GetMapping("/departments")
+/*    @GetMapping("/departments")
     public List<DepartmentModel> getAllDepartments()
     {
         return employeeService.getAllDepartments();
     }
-
+*/
     @GetMapping("/managerWithYear")
     public ResponseEntity<ResponseDTO> getManagerWithExperience(
             @RequestParam(value = "managerId", required = false) String managerId,
