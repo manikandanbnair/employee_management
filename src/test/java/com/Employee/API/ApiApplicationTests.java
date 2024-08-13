@@ -171,7 +171,7 @@ void testAddEmployeeWithExistingEmail() throws Exception {
     EmployeeModel employee = new EmployeeModel();
     employee.setId("1002");
     employee.setName("John Doe");
-    employee.setEmail("john.doe@example.com");
+    employee.setEmail("john.do@example.com");
     employee.setDesignation("Associate");
     employee.setLocation("Delhi");
     employee.setManagerId("1001");

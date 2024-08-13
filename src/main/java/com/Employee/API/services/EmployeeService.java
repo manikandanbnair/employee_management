@@ -82,30 +82,30 @@ public class EmployeeService {
             }
         } else {
             // add an employee to a manager if the manager exists
-            Optional<ManagerEmployeeModel> managerOpt = managerEmployeeRepository.findById(managerId);
-            if (managerOpt.isPresent()) {
-                ManagerEmployeeModel manager = managerOpt.get();
-                String managerDepartment = manager.getDepartment();
-                // check for designation validity and department compatability
-                if (!designation.equalsIgnoreCase("Account Manager")) {
+                Optional<ManagerEmployeeModel> managerOpt = managerEmployeeRepository.findById(managerId);
+                if (managerOpt.isPresent()) {
+                    ManagerEmployeeModel manager = managerOpt.get();
+                    String managerDepartment = manager.getDepartment();
+                    // check for designation validity and department compatability
+                    if (!designation.equalsIgnoreCase("Account Manager")) {
 
-                    if (department.equalsIgnoreCase(managerDepartment)) {
-                        updateManagerEmployeeList(manager, employee);
+                        if (department.equalsIgnoreCase(managerDepartment)) {
+                            updateManagerEmployeeList(manager, employee);
 
-                        return employeeRepository.save(employee);
+                            return employeeRepository.save(employee);
+
+                        } else {
+                            throw new IllegalArgumentException(
+                                    "Employee's department does not match the manager's department.");
+                        }
 
                     } else {
                         throw new IllegalArgumentException(
-                                "Employee's department does not match the manager's department.");
+                                "Designation cannot be Account Manager for an employee with a valid manager ID.");
                     }
-
                 } else {
-                    throw new IllegalArgumentException(
-                            "Designation cannot be Account Manager for an employee with a valid manager ID.");
+                    throw new IllegalArgumentException("Manager with ID " + managerId + " does not exist.");
                 }
-            } else {
-                throw new IllegalArgumentException("Manager with ID " + managerId + " does not exist.");
-            }
         }
     }
 
